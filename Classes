@@ -1,0 +1,77 @@
+from DnD_Formulas import *
+
+
+class Barbarian(Player):
+    def __init__(self, lvl, strength, dex, con, intel, wis, cha):
+        super().__init__(lvl, strength, dex, con, intel, wis, cha)
+
+        # Hit Point Calculator
+        self.HPRoll = 12
+        self.hp_start = self.HPRoll + self.ConMod()
+        self.HPMax = (self.hp_start + (self.Lvl - 1) * (5 + self.ConMod()))
+        self.HP = self.HPMax
+
+        # Hit Dice Calculator
+        self.hit_dice_start = self.Lvl
+        self.hit_dice = self.hit_dice_start
+
+        #Proficiencies
+        self.proficiencies += [martial_list, simple_list]
+
+        self.Str_saving_proficient = True
+        self.Con_saving_proficient = True
+        #Pick 2
+        #AnimalHandling, Athletics, Intimidation, Nature, Perception, and Survival
+
+        #1 - (a) greataxe or any martial melee weapon
+        #2 - (a)2 handaxes or any simple weapon
+        #3 - An explorer’s pack and four javelins
+
+
+        #if lvl = 1
+         #   Rage
+          #  Unarmored Defense
+        #if self.Lvl = 2
+         #   reckless_atack
+          #  danger_sense
+        #if lvl = 3
+         #   primal_path
+        #if lvl = 4
+         #   ability score improvement
+        #if lvl = 5
+         #   extra_attack
+          #  fast_movement
+
+
+
+class Bard(Player):
+    def __init__(self, lvl, strength, dex, con, intel, wis, cha):
+        super().__init__(lvl, strength, dex, con, intel, wis, cha)
+
+        #Hit Point Calculator
+        self.HPRoll = 8
+        self.hp_start = self.HPRoll + self.ConMod()
+        self.HPMax = (self.hp_start + (self.Lvl - 1) * (5 + self.ConMod()))
+        self.HP = self.HPMax
+
+        #Hit Dice Calculator
+        self.hit_dice_start = self.Lvl
+        self.hit_dice = self.hit_dice_start
+
+        #Proficiencies
+        self.proficiencies += []
+
+"""
+Barbarian
+Bard
+Cleric
+Druid
+Fighter
+Monk
+Paladin
+Ranger
+Rogue
+Sorcerer
+Warlock
+Wizard 
+"""
