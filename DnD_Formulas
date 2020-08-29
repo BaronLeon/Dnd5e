@@ -1,0 +1,355 @@
+from Inventory import *
+
+#used to calculate the whole party combinded health for encounters
+def party_hp(party):
+    party_hp = 0
+    for adventurers in party:
+        party_hp = adventurers.HP + party_hp
+    return party_hp
+
+#This is the base class for everything
+class Stats(object):
+    def __init__(self, lvl, strength, dex, con, intel, wis, cha):
+        self.Lvl = lvl
+        self.Str = strength
+        self.Dex = dex
+        self.Con = con
+        self.Int = intel
+        self.Wis = wis
+        self.Cha = cha
+
+        # Armor and Weapon inventory
+        self.primary = []
+        self.proficiencies = []
+        self.inventory = []
+        self.HP = 10
+
+    def proficiency(self):
+        if self.Lvl == 0:
+            prof = 0
+        else:
+            prof = math.ceil(self.Lvl / 4 + 1)
+        return prof
+    def AC(self):
+        ac = int(10 + self.DexMod())
+        return ac
+
+
+    #   Stat Modifiers
+    def StrMod(self):
+        mod = math.floor((self.Str - 10) / 2)
+        return mod
+    def DexMod(self):
+        mod = math.floor((self.Dex - 10) / 2)
+        return mod
+    def ConMod(self):
+        mod = math.floor((self.Con - 10) / 2)
+        return mod
+    def IntMod(self):
+        mod = math.floor((self.Int - 10) / 2)
+        return mod
+    def WisMod(self):
+        mod = math.floor((self.Wis - 10) / 2)
+        return mod
+    def ChaMod(self):
+        mod = math.floor((self.Cha - 10) / 2)
+        return mod
+
+    # skill proficiencies
+    Str_saving_proficient = False
+    Dex_saving_proficient = False
+    Con_saving_proficient = False
+    Int_saving_proficient = False
+    Wis_saving_proficient = False
+    Cha_saving_proficient = False
+
+    acrobatics_proficient = False
+    animal_handling_proficient = False
+    arcana_proficient = False
+    athletics_proficient = False
+    deception_proficient = False
+    history_proficient = False
+    insight_proficient = False
+    intimidation_proficient = False
+    investigation_proficient = False
+    medicine_proficient = False
+    nature_proficient = False
+    perception_proficient = False
+    performance_proficient = False
+    persuasion_proficient = False
+    religion_proficient = False
+    sleight_of_hand_proficient = False
+    stealth_proficient = False
+    survival_proficient = False
+
+    #   Skill Modifiers
+    def initiative(self):
+        return self.DexMod()
+
+    def passive_perception(self):
+        return 10 + self.perception()
+    def passive_insight(self):
+        return 10 + self.insight()
+    def passive_investigation(self):
+        return 10 + self.investigation()
+
+    def Str_saving_throw(self):
+        if self.Str_saving_proficient:
+            mod = self.StrMod() + self.proficiency()
+        else:
+            mod = self.StrMod()
+        return mod
+    def Dex_saving_throw(self):
+        if self.Dex_saving_proficient:
+            mod = self.DexMod() + self.proficiency()
+        else:
+            mod = Dex.StrMod()
+        return mod
+    def Con_saving_throw(self):
+        if self.Con_saving_proficient:
+            mod = self.ConMod() + self.proficiency()
+        else:
+            mod = self.ConMod()
+        return mod
+    def Int_saving_throw(self):
+        if self.Int_saving_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def Wis_saving_throw(self):
+        if self.Wis_saving_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+    def Cha_saving_throw(self):
+        if self.Cha_saving_proficient:
+            mod = self.ChaMod() + self.proficiency()
+        else:
+            mod = self.ChaMod()
+        return mod
+
+    def acrobatics(self):
+        if self.acrobatics_proficient:
+            mod = self.StrMod() + self.proficiency()
+        else:
+            mod = self.StrMod()
+        return mod
+    def animal_handling(self):
+        if self.animal_handling_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+    def arcana(self):
+        if self.arcana_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def athletics(self):
+        if self.athletics_proficient:
+            mod = self.StrMod() + self.proficiency()
+        else:
+            mod = self.StrMod()
+        return mod
+    def deception(self):
+        if self.deception_proficient:
+            mod = self.ChaMod() + self.proficiency()
+        else:
+            mod = self.ChaMod()
+        return mod
+    def history(self):
+        if self.history_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def insight(self):
+        if self.insight_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+    def intimidation(self):
+        if self.intimidation_proficient:
+            mod = self.ChaMod() + self.proficiency()
+        else:
+            mod = self.ChaMod()
+        return mod
+    def investigation(self):
+        if self.investigation_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def medicine(self):
+        if self.medicine_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+    def nature(self):
+        if self.nature_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def perception(self):
+        if self.perception_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+    def performance(self):
+        if self.performance_proficient:
+            mod = self.ChaMod() + self.proficiency()
+        else:
+            mod = self.ChaMod()
+        return mod
+    def persuasion(self):
+        if self.persuasion_proficient:
+            mod = self.ChaMod() + self.proficiency()
+        else:
+            mod = self.ChaMod()
+        return mod
+    def religion(self):
+        if self.religion_proficient:
+            mod = self.IntMod() + self.proficiency()
+        else:
+            mod = self.IntMod()
+        return mod
+    def sleight_of_hand(self):
+        if self.sleight_of_hand_proficient:
+            mod = self.DexMod() + self.proficiency()
+        else:
+            mod = self.DexMod()
+        return mod
+    def stealth(self):
+        if self.stealth_proficient:
+            mod = self.DexMod() + self.proficiency()
+        else:
+            mod = self.DexMod()
+        return mod
+    def survival(self):
+        if self.survival_proficient:
+            mod = self.WisMod() + self.proficiency()
+        else:
+            mod = self.WisMod()
+        return mod
+
+#This is the base class for players, it redirects to Stats
+class Player(Stats):
+    def __init__(self, lvl, strength, dex, con, intel, wis, cha):
+        super().__init__(lvl, strength, dex, con, intel, wis, cha)
+
+        # Armor and Weapon inventory
+        self.fist = Fist()
+        self.proficiencies += []
+        self.inventory += []
+
+        # Armor slots
+        self.primary = [self.fist]
+        self.secondary = [self.fist]
+        self.armor = []
+        self.head = []
+        self.ring = []
+        self.feet = []
+
+
+    def attack(self, target):
+        #initial Roll
+        roll = dice(20)
+        initial_roll = roll
+
+        # If weapon is finesse to determine damage & attack modifier
+        if finesse in str(self.primary[0].properties):
+            modifier = max(self.DexMod(), self.StrMod())
+        else:
+            modifier = self.StrMod()
+
+        # Criticals automatically hit and deal 2x dice damage
+        if roll == 20:
+            print("Critical Hit!")
+            damage = ((self.primary[0].damage * 2) + modifier)
+            target.HP -= damage
+            print(f"You deal {damage} points of damage")
+
+        # Are you proficient?
+        if self.primary[0].__class__.__name__.lower() in self.proficiencies:
+            roll += self.proficiency()
+        else:
+            pass
+
+
+        #Does attack Hit, if so, deal damage
+
+        roll += modifier
+        print(f"You rolled a {initial_roll}, for a total of {roll}")
+        if roll >= target.AC():
+            damage = self.primary[0].damage + modifier
+            target.HP -= damage
+            print(f"You deal {damage} points of damage")
+        else:
+            print("Miss")
+
+    def equip(self, item, space):
+        self.space = space
+        self.inventory.append(self.space[0])
+        self.space.pop()
+        self.space.append(item)
+
+    def use_hit_dice(self):
+        if self.HP >= self.HPMax:
+            print("Your health is already at max capacity")
+            return
+        elif self.hit_dice == 0:
+            print("You do not have any hit dice remaining")
+        else:
+            roll = dice(self.HPRoll)
+            self.HP += roll
+            self.hit_dice -= 1
+            print(f"You recover {roll} hit points to a toal of {self.HP}")
+            print(f"you have {self.hit_dice} remaining")
+
+#This is the base class for monsters, it redirects to Stats
+class Monster(Stats):
+    def __init__(self, lvl, strength, dex, con, intel, wis, cha):
+        super().__init__(lvl, strength, dex, con, intel, wis, cha)
+
+    def attack(self):
+        roll = dice(20)
+        if roll == 1:
+            print("Natural 1")
+            return 1
+        elif roll == 20:
+            print("Critical Hit!")
+            return 30
+        else:
+            return self.proficiency() + roll
+
+
+def party_hp(party):
+    party_hp = 0
+    for adventurers in party:
+        party_hp = adventurers.HP + party_hp
+    return party_hp
+
+
+def encounter(party, encounter):
+    while party_hp(party) > 0 and party_hp(encounter) > 0:
+        # creat a list for the encounter
+        # have everyone roll for initiative and then repopulate the list
+        # then run through the list
+
+        if vampire.attack() >= Baron.AC():
+            Baron.HP = Baron.HP - dice(3)
+            print(f"Their attack hits, you have {Baron.HP} hit points remaining \n")
+        elif vampire.attack() < Baron.AC():
+            print("Their attack misses \n")
+
+
+
+
+
