@@ -1,0 +1,349 @@
+from master import *
+
+party = []
+
+# Weapon Properties
+simple = "simple"
+martial = "martial"
+
+finesse = "finesse"
+versatile = "versatile"
+
+light = "light"
+thrown = "thrown"
+two_hand = "two-handed"
+
+heavy = "heavy"
+reach = "reach"
+special = "special"
+
+
+weapon_properties = [martial, simple, finesse]
+martial_list = ["flail"]
+simple_list = []
+armor_list = ["light armor" "medium armor" "shields"]
+tool_list = []
+
+# Damage Types
+bludgeon = "bludgeoning"
+pierce = "piercing"
+slash = "slashing"
+
+
+#Master Weapon Class
+class Weapons(object):
+    def __init__(self, cost, damage, dmgtype, weight):
+        self.cost = cost
+        self.damage = damage
+        self.dmgtype = dmgtype
+        self.weight = weight
+
+        self.properties = []
+
+
+#Secondary Weapon Classes
+class Martial(Weapons):
+    def __init__(self, cost, damage, dmgtype, weight):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [martial]
+
+
+class Simple(Weapons):
+    def __init__(self, cost, damage, dmgtype, weight):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [simple]
+
+
+#Tertiary Weapon Classes
+class Fist(Weapons):
+    def __init__(self,
+                 cost=0,
+                 damage=dice(4),
+                 dmgtype=bludgeon,
+                 weight=0):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += []
+
+class BattleAxe(Martial):
+    def __init__(self,
+                 cost=10,
+                 damage=dice(8),
+                 dmgtype=slash,
+                 weight=4):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [versatile]
+
+class Flail(Martial):
+    def __init__(self,
+                 cost=10,
+                 damage=dice(8),
+                 dmgtype=bludgeon,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += []
+
+class Glaive(Martial):
+    def __init__(self,
+                 cost=20,
+                 damage=dice(10),
+                 dmgtype=slash,
+                 weight=6):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, reach, two_hand]
+
+class GreatAxe(Martial):
+    def __init__(self,
+                 cost=30,
+                 damage=dice(12),
+                 dmgtype=slash,
+                 weight=7):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, two_hand]
+
+class GreatSword(Martial):
+    def __init__(self,
+                 cost=50,
+                 damage=dice(6),
+                 dmgtype=slash,
+                 weight=6):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, two_hand]
+
+class Halbred(Martial):
+    def __init__(self,
+                 cost=20,
+                 damage=dice(10),
+                 dmgtype=slash,
+                 weight=6):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, reach, two_hand]
+
+class Lance(Martial):
+    def __init__(self,
+                 cost=10,
+                 damage=dice(12),
+                 dmgtype=pierce,
+                 weight=6):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [reach, special]
+
+class Longsword(Martial):
+    def __init__(self,
+                 cost=15,
+                 damage=dice(8),
+                 dmgtype=slash,
+                 weight=3):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [versatile]
+
+class Maul(Martial):
+    def __init__(self,
+                 cost=10,
+                 damage=dice(6),
+                 dmgtype=bludgeon,
+                 weight=10):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, two_hand]
+
+class MorningStar(Martial):
+    def __init__(self,
+                 cost=15,
+                 damage=dice(8),
+                 dmgtype=pierce,
+                 weight=4):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += []
+
+class Pike(Martial):
+    def __init__(self,
+                 cost=5,
+                 damage=dice(10),
+                 dmgtype=bludgeon,
+                 weight=18):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [heavy, reach, two_hand]
+
+class Rapier(Martial):
+    def __init__(self,
+                 cost=25,
+                 damage=dice(8),
+                 dmgtype=pierce,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [finesse]
+
+class Scimitar(Martial):
+    def __init__(self,
+                 cost=25,
+                 damage=dice(6),
+                 dmgtype=slash,
+                 weight=3):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [finesse, light]
+
+class Shortsword(Martial):
+    def __init__(self,
+                 cost=10,
+                 damage=dice(6),
+                 dmgtype=pierce,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [finesse, light]
+
+class Trident(Martial):
+    def __init__(self,
+                 cost=5,
+                 damage=dice(6),
+                 dmgtype=pierce,
+                 weight=4):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [thrown, versatile]
+
+class WarPick(Martial):
+    def __init__(self,
+                 cost=5,
+                 damage=dice(8),
+                 dmgtype=pierce,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += []
+
+class Warhammer(Martial):
+    def __init__(self,
+                 cost=15,
+                 damage=dice(8),
+                 dmgtype=bludgeon,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [versatile]
+
+class Whip(Martial):
+    def __init__(self,
+                 cost=2,
+                 damage=dice(4),
+                 dmgtype=slash,
+                 weight=3):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [finesse, reach]
+
+class Club(Simple):
+    def __init__(self,
+                 cost=.1,
+                 damage=dice(4),
+                 dmgtype=bludgeon,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [light]
+
+class Dagger(Simple):
+    def __init__(self,
+                 cost=2,
+                 damage=dice(4),
+                 dmgtype=bludgeon,
+                 weight=1):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [finesse, light, thrown]
+
+class Greatclub(Simple):
+    def __init__(self,
+                 cost=.2,
+                 damage=dice(8),
+                 dmgtype=bludgeon,
+                 weight=10):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [two_hand]
+
+class Handaxe(Simple):
+    def __init__(self,
+                 cost=5,
+                 damage=dice(6),
+                 dmgtype=slash,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [light, thrown]
+
+class Javelin(Simple):
+    def __init__(self,
+                 cost=.5,
+                 damage=dice(6),
+                 dmgtype=pierce,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [thrown]
+
+class LightHammer(Simple):
+    def __init__(self,
+                 cost=2,
+                 damage=dice(4),
+                 dmgtype=bludgeon,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [light, thrown]
+
+class Mace(Simple):
+    def __init__(self,
+                 cost=5,
+                 damage=dice(6),
+                 dmgtype=bludgeon,
+                 weight=4):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += []
+
+class Quarterstaff(Simple):
+    def __init__(self,
+                 cost=.2,
+                 damage=dice(6),
+                 dmgtype=bludgeon,
+                 weight=4):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [versatile]
+
+class Sickle(Simple):
+    def __init__(self,
+                 cost=1,
+                 damage=dice(4),
+                 dmgtype=slash,
+                 weight=2):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [light]
+
+class Spear(Simple):
+    def __init__(self,
+                 cost=1,
+                 damage=dice(6),
+                 dmgtype=pierce,
+                 weight=3):
+        super().__init__(cost, damage, dmgtype, weight)
+
+        self.properties += [thrown, versatile]
+
